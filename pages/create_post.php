@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../css/post.css">
+    <link rel="stylesheet" href="../css/editor.css">
     <link rel="stylesheet" href="../css/header.css">
 </head>
 <body>
@@ -13,7 +13,7 @@
         require "header.php";
     ?>
 
-    <div class="editor-wrapper">
+    <div class="post-wrapper">
         <div class="editor-container">
             <div class="editor-menu">
                 <div class="editor-menu-item" data-create="header">Zagłówek</div>
@@ -80,6 +80,6 @@
             </div>
         </div>
     </div>
-    <script src="../scripts/post.js"></script>
+    <script src="../scripts/editor.js"></script>
 </body>
 </html>

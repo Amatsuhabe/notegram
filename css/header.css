@@ -23,8 +23,9 @@ body{
     background-color: #F0F0F0;
 }
 
-header img{
-    height: 80%;
+img{
+    height: 100%;
+    width: auto;
 }
 
 .document-header{
@@ -61,8 +62,12 @@ header img{
 }
 
 .user-avatar{
-    border: 2px solid rgba(0,0,0,0.4);
+    height: 48px;
+    width: 48px;
+    overflow: hidden;
+    /* border:2px solid rgba(0,0,0,0.4); */
     border-radius: 50%;
+    flex: 0 0 48px;
 }
 
 .auth-wrapper > .user-avatar{
@@ -100,7 +105,7 @@ header img{
 
 .btn{
     cursor: pointer;
-    transition: .25s background-color;
+    transition: .25s background-color, .25s opacity;
 }
 
 .btn:not([disabled]):hover{

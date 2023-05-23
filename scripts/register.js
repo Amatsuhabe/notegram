@@ -8,9 +8,14 @@ document.querySelector("form").addEventListener("submit", (event) => {
         fetch("../php_scripts/register.php", {
             method: "post",
             body: new FormData(event.target)
-        }).then(response => response.text()).then(data => {
-            if (data == "username")
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error == "username")
                 addIncorrect(document.querySelector("#username"))
+            else if (data.error = "email"){
+                addIncorrect(document.querySelector("#email"))
+            }
             else
                 window.location.href = "/notegram/"
         })
@@ -72,9 +77,9 @@ document.querySelector('input[name="username"]').addEventListener("input", (even
             method: "post",
             body: form
         })
-        .then(response => response.text())
+        .then(response => response.json())
         .then(data => {
-            if (data)
+            if (data.isAvailable)
                 addCorrect(event.target)
             else
                 addIncorrect(event.target)

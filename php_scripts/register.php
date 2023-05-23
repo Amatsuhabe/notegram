@@ -13,9 +13,9 @@
         $gender = $_POST['gender'];
 
         if ($gender == "male")
-            $avatar = "avatars/default_male.jfif";
+            $avatar = "default_male.jfif";
         else
-            $avatar = "avatars/default_female.jfif";
+            $avatar = "default_female.jfif";
 
         mysqli_query($connection, "INSERT INTO users(username, password, name, surname, email, gender, avatar) VALUES('$username', '$password', '$name', '$surname', '$email', '$gender', '$avatar')");
 
@@ -28,5 +28,5 @@
         $_SESSION["email"] = $result['email'];
     }
     else
-        print_r("username");
+        echo (json_encode(["error" => "username"]));
 ?>

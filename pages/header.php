@@ -5,6 +5,8 @@
 
     if (!isset($_SESSION["username"]) && $currentPage != "login.php" && $currentPage != "register.php")
         header("Location: /notegram/pages/login.php");
+
+    $user = mysqli_fetch_assoc(mysqli_query($connection, "SELECT avatar, username, name, surname FROM users WHERE id = {$_SESSION['id']}"));
 ?>
 
 <header class="document-header">
@@ -20,12 +22,15 @@
             Stwórz nowy post
         </a>
         <div class="auth-wrapper">
-            <img class="user-avatar" src="/notegram/avatars/default_male.jfif"></img>
+            <div class="user-avatar">
+                <img src="/notegram/avatars/default_male.jfif"></img>
+            </div>
             
             <div class="menu-wrapper hidden">
                 <div class="user-data-wrapper">
-                    <img class="user-avatar" src="/notegram/avatars/default_male.jfif"></img>
-
+                    <div class="user-avatar">
+                        <img src="/notegram/avatars/default_male.jfif"></img>
+                    </div>
                     <div class="user-data">
                         <div class="username"><?php echo $_SESSION["username"]; ?></div>
                         <div class="email"><?php echo $_SESSION["email"] ?></div>
@@ -35,10 +40,6 @@
                     <a href="/notegram/pages/profile.php?id=<?php echo $_SESSION["id"];?>" class="menu-item">
                         Profil
                     </a>
-
-                    <div class="menu-item">
-                        Motyw ciemny
-                    </div>
 
                     <div class="menu-item">
                         Ustawienia

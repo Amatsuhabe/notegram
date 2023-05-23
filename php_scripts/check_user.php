@@ -5,5 +5,5 @@
     $query = mysqli_query($connection, "SELECT * FROM users WHERE username='$username'");
 
 
-    echo $query->num_rows == 0;
+    echo json_encode(["isAvailable" => $query->num_rows == 0]);
 ?>
