@@ -1,6 +1,9 @@
 let editor = document.querySelector(".post")
 let editorMenu = document.querySelector(".editor-menu")
 let menuLength = editorMenu.children.length
+let publicateBtn = document.querySelector(".publicate-btn")
+
+let coverValue
 
 const allowedExtensions = ["jpg", "png", "jfif", "jpeg"]
 
@@ -31,9 +34,8 @@ let defaultMenu = `
 `
 
 function checkRequires(){
-    let publicateBtn = document.querySelector(".publicate-btn")
     publicateBtn.removeEventListener("click", publicate)
-    publicateBtn.setAttribute("disabled")
+    publicateBtn.setAttribute("disabled", "")
 
     function publicate(){
         document.querySelectorAll(".node-remove, .settings-wrapper").forEach(el => el.remove())
@@ -41,16 +43,24 @@ function checkRequires(){
         document.querySelectorAll("[contenteditable], [data-empty]").forEach(el => el.removeAttribute("contenteditable"))
 
         let form = new FormData()
-        form.append("content", editor.innerHTML)
+        form.append("content", document.querySelector(".post").innerHTML)
         form.append("header", document.querySelector(".post-header").textContent)
+        form.append("difficulty", document.querySelector("#difficult").value)
+        form.append("keywords", keywords)
+        // form.append("readability", document.querySelector(""))
+        form.append("cover", cover.querySelector("input").files[0])
         console.log(editor.innerHTML)
         fetch("../php_scripts/upload_post.php", {
             method: "POST",
             body: form
         })
+        .then(response => response.text())
+        .then(data => console.log(data))
     }
 
     if (requires.length == 0){
+        publicateBtn.removeEventListener("click", publicate)
+
         publicateBtn.addEventListener("click", publicate)
         publicateBtn.removeAttribute("disabled")
     }
@@ -66,6 +76,7 @@ cover.addEventListener("click", (e) => {
         reader.readAsDataURL(input.files[0])
 
         reader.onload = (e) => {
+            coverValue = input.files[0]
             cover.querySelector("img").src = reader.result
 
             if (requires.includes("cover"))

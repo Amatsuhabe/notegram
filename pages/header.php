@@ -6,7 +6,7 @@
     if (!isset($_SESSION["username"]) && $currentPage != "login.php" && $currentPage != "register.php")
         header("Location: /notegram/pages/login.php");
 
-    $user = mysqli_fetch_assoc(mysqli_query($connection, "SELECT avatar, username, name, surname FROM users WHERE id = {$_SESSION['id']}"));
+    // $user = mysqli_fetch_assoc(mysqli_query($connection, "SELECT avatar, username, name, surname FROM users WHERE id = {$_SESSION['id']}"));
 ?>
 
 <header class="document-header">
