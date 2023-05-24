@@ -23,6 +23,7 @@ body{
     background-color: #F0F0F0;
 }
 
+
 img{
     height: 100%;
     width: auto;
@@ -43,6 +44,10 @@ img{
     margin-right: auto;
     gap: 10px;
     height: 100%;
+}
+
+.logo-img{
+    height: 80%;
 }
 
 .logo-name{
@@ -74,22 +79,40 @@ img{
     cursor: pointer;
 }
 
+.create-post-wrapper{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
 .create-post-btn{
     display: flex;
     align-items: center;
     position: relative;
-    padding: 7.5px 7.5px 7.5px 22px;
 }
 
-.create-post-btn:hover{
-    background-color: #D9D9D9;
+.create-post-btn::before{
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: black;
+    transition: .25s width;
 }
 
-.create-post-btn:hover::before, .create-post-btn:hover::after{
-    background-color: white;
+.create-post-btn:hover::before{
+    width: 100%;
 }
 
-.create-post-btn::before, .create-post-btn::after{
+.create-post-cross{
+    position: relative;
+    width: 15px;
+    height: 15px;
+}
+
+.create-post-cross::before, .create-post-cross::after{
     content: "";
     position: absolute;
     background-color: #D9D9D9;
@@ -99,7 +122,7 @@ img{
     transition: .25s;
 }
 
-.create-post-btn::before{
+.create-post-cross::before{
     transform: rotate(90deg);
 }
 
@@ -108,7 +131,7 @@ img{
     transition: .25s background-color, .25s opacity;
 }
 
-.btn:not([disabled]):hover{
+.btn:not([disabled], .create-post-btn):hover{
     background-color: #D9D9D9;
 }
 

@@ -18,9 +18,12 @@
     <?php
         if (isset($_SESSION["username"])):
     ?>
-        <a href="/notegram/pages/create_post.php" class="create-post-btn btn">
-            Stwórz nowy post
-        </a>
+        <div class="create-post-wrapper">
+            <div class="create-post-cross"></div>
+            <a href="/notegram/pages/create_post.php" class="create-post-btn btn">
+                Stwórz nowy post
+            </a>
+        </div>
         <div class="auth-wrapper">
             <div class="user-avatar">
                 <img src="/notegram/avatars/default_male.jfif"></img>

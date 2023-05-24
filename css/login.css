@@ -62,6 +62,7 @@ input:not(input[type="radio"], input[type="checkbox"]){
 
 .error-field{
     color: #C62121;
+    height: 1em;
 }
 
 input:-webkit-autofill,

@@ -238,6 +238,7 @@ li > ul {
 
 .author-wrapper{
     display: flex;
+    align-items: baseline;
     gap: 15px;
 }
 
@@ -249,6 +250,7 @@ li > ul {
 
 .comment-date{
     font-weight: bold;
+    font-size: 12px;
     color: rgba(0,0,0,.3);
 }
 

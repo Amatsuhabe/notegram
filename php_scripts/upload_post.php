@@ -5,14 +5,11 @@
 
     session_start();
     
-    
     $upload_dir = "../covers";
+
     $name = explode(".", $_FILES["cover"]["name"])[0] . time() . "." . explode("/", $_FILES["cover"]["type"])[1];
     move_uploaded_file($_FILES["cover"]["tmp_name"], "$upload_dir/$name");
-    print_r($name);
-    echo "\n";
-    print_r($_FILES);
-    echo "\n";
+
     $content = trim($_POST['content']);
     $header = $_POST['header'];
     $user_id = $_SESSION['id'];

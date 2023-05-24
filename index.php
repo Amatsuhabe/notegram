@@ -13,30 +13,38 @@
     <?php
         require "php_scripts/connection.php";
         require "pages/header.php";
-        
     ?>
     <div class="main-content">
-        <?php 
-            $query = mysqli_query($connection, "SELECT * FROM posts INNER JOIN users ON posts.user_id = users.id");
-            $posts = mysqli_fecth_all($query);
-
-            foreach($posts as $post){
-                echo "
-                    <div class='post-wrapper'>
-                        <div class='post-cover'>
-                            <img src='/notegram/covers/{$post["cover"]}/>
-                        </div> 
-                        <div class='post-container'>
-                            <div class='user-wrapper'>
-                                {$post["username"]}
+        <div class="posts-wrapper">
+            <?php 
+                $posts = mysqli_fetch_all(mysqli_query($connection, "SELECT posts.id as id, cover, header, avatar, username, create_date FROM posts INNER JOIN users ON posts.user_id = users.id"), MYSQLI_ASSOC);
+                foreach($posts as $post){
+                    $time_difference = time() - strtotime($post["create_date"]);
+                    include "php_scripts/check_date.php";
+                    echo "
+                        <a href='pages/post.php?id={$post["id"]}'>
+                            <div class='post-wrapper'>
+                                <div class='post-cover'>
+                                    <img src='/notegram/covers/{$post["cover"]}'/>
+                                </div> 
+                                <div class='post-container'>
+                                    <div class='post-header' title='{$post["header"]}'>{$post["header"]}</div>
+                                    <div class='user-wrapper'>
+                                        <div class='user-avatar'>
+                                            <img src='/notegram/avatars/{$post["avatar"]}'>
+                                        </div>
+                                        <div class='username-date-wrapper'>
+                                            <div class='username'>{$post["username"]}</div>
+                                            <div class='post-date'>{$time_format}</div></div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                ";
-            }
-        ?>
+                        </a>
+                    ";
+                }
+            ?>
+        </div>
     </div>
     <script src="main.js"></script>
-    <script src="scripts/header.js"></script>
 </body>
 </html>

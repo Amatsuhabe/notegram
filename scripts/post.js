@@ -10,6 +10,11 @@ function uploadComment(){
         method: "POST",
         body: form
     })
+    .then(response => response.text())
+    .then(data => {
+        if (data)
+            window.location.reload()
+    })
 }
 
 publicateBtn.addEventListener("click", uploadComment)

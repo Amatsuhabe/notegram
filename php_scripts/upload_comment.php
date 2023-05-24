@@ -9,4 +9,5 @@
 
     mysqli_query($connection, "INSERT INTO comments VALUES(null, '$user_id', '$post_id', '$comment', '$date')");
 
+    echo 1;
 ?>

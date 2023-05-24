@@ -238,10 +238,14 @@ li > ul {
 
 .cover-wrapper{
     position: relative;
-    padding: 10px;
     height: 400px;
     width: 400px;
     border: 1px solid rgba(0,0,0,.2);
+}
+
+[disabled]{
+    opacity: 0.5;
+    cursor: default !important;
 }
 
 /* .clear-btn{
@@ -277,13 +281,18 @@ li > ul {
 
 .cover{
     height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
 .cover img{
-    height: 100%;
-    margin: 0 auto;
     display: block;
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+    width: auto;
 }
 
 .cover.is-empty::before{

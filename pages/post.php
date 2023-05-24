@@ -3,7 +3,12 @@
         
     $post_id = $_GET['id'];
 
-    $result = mysqli_fetch_assoc(mysqli_query($connection, "SELECT username, name, surname, avatar, header, content FROM posts INNER JOIN users ON users.id = posts.user_id WHERE posts.id = '$post_id'"));
+    $query = mysqli_query($connection, "SELECT username, name, surname, avatar, header, content FROM posts INNER JOIN users ON users.id = posts.user_id WHERE posts.id = '$post_id'");
+
+    if ($query->num_rows == 0)
+        header("Location: /notegram");
+
+    $result = mysqli_fetch_assoc($query);
     
     // $user_id = $result['user_id'];
 
@@ -27,7 +32,6 @@
     <div class="post-wrapper">
         <div class="post">
         <?php 
-            
             print_r($result['content']);
         ?>
         </div>
@@ -52,28 +56,7 @@
                 <?php
                     foreach($comments as $comment){
                         $time_difference = time() - strtotime($comment["create_date"]);
-                        $time_format = '';
-                        if ($time_difference < 60){
-                            $time_format = "$time_difference sekund temu";
-                        }
-                        else if ($time_difference < 3600){
-                            $minutes = round($time_difference / 60);
-                            if ($minutes == 1 || (strval($minutes)[1] == 1 && $minutes > 20))
-                                $time_format = "$minutes minutę temu";
-                            else if (($minutes > 1 && $minutes < 10) || (strval($minutes)[-1] > 1 && $minutes > 20))
-                                $time_format = "$minutes minuty temu";
-                            else if (($minutes > 4) || (strval($minutes)[-1] > 4 && $minutes > 20))
-                                $time_format = "$minutes minut temu";
-                        }
-                        else if ($time_difference < 86400){
-                            $hours = round($time_difference / 3600);
-                            if ($hours == 1 || (strval($hours)[1] == 1 && $hours > 20))
-                                $time_format = "$hours godzinę temu";
-                            else if (($hours > 1 && $hours < 10) || (strval($hours)[-1] > 1 && $hours > 20))
-                                $time_format = "$hours godziny temu";
-                            else if ($hours > 4 || (strval($hours)[-1] > 4 && $hours > 20))
-                                $time_format = "$hours godzin temu";
-                        }
+                        include "../php_scripts/check_date.php";
                         echo "
                         <div class='comment-wrapper'>
                             <div class='author-avatar user-avatar'>
