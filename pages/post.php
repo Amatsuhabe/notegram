@@ -38,7 +38,7 @@
         <div class="comments-wrapper">
             <div class="comments-container">
                 <?php 
-                    $comments = mysqli_query($connection, "SELECT avatar, content, username, create_date  FROM comments INNER JOIN users ON comments.user_id = users.id WHERE post_id = '$post_id'");
+                    $comments = mysqli_query($connection, "SELECT comments.id as id, avatar, content, username, create_date  FROM comments INNER JOIN users ON comments.user_id = users.id WHERE post_id = '$post_id' && parent_comment_id = 0");
                 ?>
                 
                 <div class="comments-header">
@@ -54,29 +54,55 @@
                     <div class="publicate-btn btn" disabled>Opublikować</div>
                 </div>
                 <?php
-                    foreach($comments as $comment){
-                        $time_difference = time() - strtotime($comment["create_date"]);
-                        include "../php_scripts/check_date.php";
-                        echo "
-                        <div class='comment-wrapper'>
-                            <div class='author-avatar user-avatar'>
-                                <img src='/notegram/avatars/{$comment["avatar"]}' alt=''>
+                    
+                    displayComments($comments);
+                    function displayComments($comments, $parentID = 0, $depth = 0){
+                        global $connection, $post_id;
+                        
+                        $comments = mysqli_fetch_all(mysqli_query($connection, "SELECT comments.id as id, avatar, content, username, create_date  FROM comments INNER JOIN users ON comments.user_id = users.id WHERE post_id = '$post_id' && parent_comment_id = '$parentID'"), MYSQLI_ASSOC);
+                        
+                        if (count($comments) == 0) {
+                            $depth = $parentID = 0;
+                        }
+
+                        foreach($comments as $comment){
+                            $time_difference = time() - strtotime($comment["create_date"]);
+                            include "../php_scripts/check_date.php";
+                            echo "
+                            <div class='comment-wrapper'>
+                             
+                                <input type='hidden' value={$comment["id"]}>
+                                <div class='comment-container'>
+                                    <div class='author-avatar user-avatar'>
+                                        <img src='/notegram/avatars/{$comment["avatar"]}' alt=''>
+                                    </div>
+                                    <div class='comment-content'>
+                                        <div class='author-wrapper'>
+                                            <div class='author-comment'>adssdffsdafsdsfd{$comment["username"]}</div>
+                                            <div class='comment-date'>{$time_format}</div>
+                                        </div>
+                                        <div class='comment-message'>
+                                            {$comment["content"]}
+                                        </div>
+                                        <div class='comment-btn-wrapper'>
+                                            <div class='reply-btn btn'>Odpowiedzieć</div>
+                                            <div class='like-btn btn'>Like</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='replies-wrapper'>
+                                    <div class='expand-wrapper'>";
+                                        for ($i = 0; $i <= $depth; $i++) { 
+                                            echo "<div class='expand-item'></div>";
+                                        };
+                                echo"</div>"; 
+                                    displayComments($comments, $comment["id"], ++$depth);
+                                echo 
+                                "
+                                </div>
                             </div>
-                            <div class='comment-container'>
-                                <div class='author-wrapper'>
-                                    <div class='author-comment'>{$comment["username"]}</div>
-                                    <div class='comment-date'>{$time_format}</div>
-                                </div>
-                                <div class='comment-message'>
-                                    {$comment["content"]}
-                                </div>
-                                <div class='comment-btn-wrapper'>
-                                    <div class='reply-btn btn'>Odpowiedzieć</div>
-                                    <div class='like-btn btn'>Like</div>
-                                </div>
-                            </div>
-                        </div>
-                        ";
+                            ";
+                        };
                     };
                 ?>
             </div>

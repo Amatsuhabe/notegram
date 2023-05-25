@@ -231,6 +231,7 @@ li > ul {
 
 .comment-wrapper{
     display: flex;
+    flex-direction: column;
     gap: 7px;
     border-bottom: 1px solid rgba(0,0,0,.2);
     padding: 20px 0;
@@ -243,6 +244,10 @@ li > ul {
 }
 
 .comment-container{
+    display: flex;
+}
+
+.comment-content{
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -269,4 +274,18 @@ li > ul {
     background: none;
     border: none;
     padding: 0;
+}
+
+.reply-container{
+    margin-left: 20px;
+    border-top: 1px solid rgba(0,0,0,.2);
+    padding: 10px;
+}
+
+.replies-wrapper{
+    display: flex;
+}
+
+.expand-item{
+    width: 48px;
 }
