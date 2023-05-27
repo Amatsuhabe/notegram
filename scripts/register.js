@@ -1,7 +1,14 @@
 let errors = new Set(["name", "surname", "password", "email", "username", "confirm"])
-let usernameTimeout
+let timeout
 
-document.querySelector("form").addEventListener("submit", (event) => {
+let formField = document.querySelector("form")
+let emailField = document.querySelector("input#email")
+let usernameField = document.querySelector("input#username")
+
+let passwordField = document.querySelector("input#password")
+let confirmField = document.querySelector("input#confirm")
+
+formField.addEventListener("submit", (event) => {
     event.preventDefault()
     console.log(errors)
     if (errors.size == 0)
@@ -10,18 +17,14 @@ document.querySelector("form").addEventListener("submit", (event) => {
             body: new FormData(event.target)
         })
         .then(response => response.json())
-        .then(data => {
-            if (data.error == "username")
-                addIncorrect(document.querySelector("#username"))
-            else if (data.error = "email"){
-                addIncorrect(document.querySelector("#email"))
-            }
-            else
-                window.location.href = "/notegram/"
+        .then(errors => {
+            errors.forEach(error => {
+                addIncorrect(document.querySelector(`#${error}`))
+            })         
         })
     else
         errors.forEach(error => {
-            document.querySelector(`#${error}`).classList.add("incorrect")
+            addIncorrect(document.querySelector(`#${error}`))
         })
 })
 
@@ -36,7 +39,7 @@ document.querySelectorAll(".input-container:nth-child(1)").forEach(input => {
     })
 })
 
-document.querySelector('input[name="password"]').addEventListener("input", (event) => {
+passwordField.addEventListener("input", (event) => {
     if (event.target.value.length > 0){
         addCorrect(event.target)
     }
@@ -44,20 +47,22 @@ document.querySelector('input[name="password"]').addEventListener("input", (even
         addIncorrect(event.target)
     }
 
-    if (event.target.value != document.querySelector('#confirm').value)
-        addIncorrect(document.querySelector('#confirm'))
+    if (event.target.value != confirmField.value)
+        addIncorrect(confirmField)
     else
-        addCorrect(document.querySelector('#confirm'))
+        addCorrect(confirmField)
+
+    addFieldCheck(passwordField, "password")
 })
 
-document.querySelector('#confirm').addEventListener("input", (event) => {
-    if (event.target.value != document.querySelector('input[type="password"]').value)
+confirmField.addEventListener("input", (event) => {
+    if (event.target.value != passwordField.value)
         addIncorrect(event.target)
     else
         addCorrect(event.target)
 })
 
-document.querySelector('input[name="username"]').addEventListener("input", (event) => { 
+usernameField.addEventListener("input", (event) => { 
     let value = event.target.value
 
     let form = new FormData()
@@ -69,31 +74,20 @@ document.querySelector('input[name="username"]').addEventListener("input", (even
     else
         addCorrect(event.target)
 
-    clearTimeout(usernameTimeout)
-    usernameTimeout = setTimeout(() => {
-        form.append("username", value)
-        
-        fetch("../php_scripts/check_user.php", {
-            method: "post",
-            body: form
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.isAvailable)
-                addCorrect(event.target)
-            else
-                addIncorrect(event.target)
-        })    
-    }, 500)
+    addFieldCheck(usernameField, "username")
 })
 
-document.querySelector('input[name="email"]').addEventListener("input", (event) => {
+emailField.addEventListener("input", (event) => {
     let value = event.target.value
-    console.log(value.match(/@[a-z]+\.[a-z]+/i))
-    if (value.match(/@[a-z]+\.[a-z]+/i) != null)
-        addCorrect(event.target)
-    else
+    if (value.match(/@[a-z]+\.[a-z]+/i) != null){
+        addCorrect(event.target) 
+        
+        addFieldCheck(emailField, "email")
+    }
+    else{
         addIncorrect(event.target)
+        emailField.parentElement.dataset.error = ""
+    }
 
 })
 
@@ -110,5 +104,34 @@ function addIncorrect(...elements){
         element.classList.remove("correct")
         element.classList.add("incorrect")
         errors.add(element.getAttribute("id"))
+    })
+}
+
+function addFieldCheck(field, dataName){
+    clearTimeout(timeout)
+    let value = field.value
+    timeout = setTimeout(() => {
+        field.classList.add("waiting")
+        let form = new FormData()
+        
+        form.append(`${dataName}`, value)
+        
+        passwordTimeout = setTimeout(() => {
+            fetch(`../php_scripts/check_${dataName}.php`, {
+                method: "POST",
+                body: form
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                
+                field.parentElement.dataset.error = data.message
+
+                if (!data.isAvailable)                    
+                    addIncorrect(field)
+                    
+                field.classList.remove("waiting")
+            })
+        }, 250)
     })
 }

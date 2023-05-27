@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,6 +10,7 @@
     <link rel="stylesheet" href="../css/header.css">
 
 </head>
+
 <body>
     <?php
         require "./header.php";
@@ -26,19 +28,27 @@
                 </div>
 
                 <div class="input-container">
-                    <input type="password" name="password" id="password" placeholder="Hasło">
+                    <div class="input-check-wrapper" data-error="Hasło jest zajęte">
+                        <input type="password" name="password" id="password" class="" placeholder="Hasło">
+                    </div>
+
                     <input type="password" id="confirm" placeholder="Potwierdzenie hasła">
                 </div>
 
                 <div class="input-container">
-                    <input type="text" name="username" id="username" placeholder="Nazwa użytkownika">
-                    <input type="text" name="email" id="email" placeholder="Adres mailowy">
+                    <div class="input-check-wrapper" data-error="">
+                        <input type="text" name="username" id="username" class="" placeholder="Nazwa użytkownika">
+                    </div>
+
+                    <div class="input-check-wrapper" data-error="">
+                        <input type="text" name="email" id="email" placeholder="Adres mailowy">
+                    </div>
                 </div>
             </div>
 
             <select class="gender-choose" name="gender" id="">
-                    <option value="male">Mężczyzna</option>
-                    <option value="female">Kobieta</option>
+                <option value="male">Mężczyzna</option>
+                <option value="female">Kobieta</option>
             </select>
 
             <!-- <div class="persist-wrapper">
@@ -53,4 +63,5 @@
     </div>
     <script src="../scripts/register.js"></script>
 </body>
+
 </html>

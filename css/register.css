@@ -53,6 +53,7 @@ input:not(input[type="radio"], input[type="checkbox"]){
 .gender-choose{
     border: none;
     outline: none;
+    margin-top: 24px;
     cursor: pointer;
     border-bottom: 1px solid rgba(0,0,0,0.4);
     background-color: #f0f0f0 !important;
@@ -85,8 +86,80 @@ option{
 .incorrect{
     border-bottom: 1px solid #C62121 !important;
 }
+
 input:-webkit-autofill,
 textarea:-webkit-autofill,
 select:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 1000px #f0f0f0 inset !important;
+}
+.input-check-wrapper input{
+    width: auto !important;
+}
+
+.input-check-wrapper{
+    position: relative;
+}
+
+.input-check-wrapper:has(.incorrect)::before{
+    border-color: #C62121;
+    border-top-color: transparent;
+}
+
+.input-check-wrapper:has(.correct)::before{
+    border-color: #32D23B;
+    border-top-color: transparent;
+}
+
+.input-check-wrapper::before{
+    content: "";
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    border-width: 2px;
+    border-style: solid;
+    transition: .35s border-color, .45s opacity; 
+}
+
+.input-check-wrapper:has(.waiting)::before{
+    content: "";
+    opacity: 1;
+    animation: rotating .4s infinite;
+}
+.input-check-wrapper::after{
+    content: attr(data-error);
+    position: absolute;
+    width: max-content;
+    padding-top: 5px;
+    line-height: 1;
+    height: 1em;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    text-align: left;
+    width: 100%;
+    transform: translateY(calc(100% + 10px));
+    font-weight: 400;
+    font-size: 14px;
+    color: #C62121;
+    border-radius: 5px;
+    transition: .25s;
+}
+
+.input-check-wrapper:has(.incorrect)::after{
+    opacity: 1;
+}
+
+@keyframes rotating{
+    0%{
+        transform: translateY(-50%) rotate(0deg);
+    }
+    100%{
+        transform: translateY(-50%) rotate(360deg);
+    }
 }

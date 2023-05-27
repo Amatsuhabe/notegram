@@ -47,8 +47,10 @@ function checkRequires(){
             form.append("content", document.querySelector(".post").innerHTML)
             form.append("header", document.querySelector(".post-header").textContent)
             form.append("difficulty", document.querySelector("#difficult").value)
-            form.append("keywords", keywords)
+            form.append("keywords", JSON.stringify(keywords))
             form.append("cover", cover.querySelector("input").files[0])
+            form.append("first_paragraph", document.querySelector(".paragraph").textContent)
+            form.append("theme_id", document.querySelector(".theme-choose").value)
     
             fetch("../php_scripts/upload_post.php", {
                 method: "POST",

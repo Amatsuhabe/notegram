@@ -1,0 +1,43 @@
+.profile-wrapper{
+    display: flex;
+    flex-direction: column;
+    height: 30%;
+}
+
+.profile-cover{
+    background-color: #D9D9D9;
+    flex-basis: 55%;
+}
+
+.profile-wrapper .user-avatar{
+    height: 80px;
+    width: 80px;
+    flex-basis: 80px;
+}
+
+.profile-container{
+    padding-left: 120px;
+    background-color: #fff;
+    flex-basis: 45%;
+}
+
+.profile-wrapper .user-data-container{
+    display: flex;
+    width: fit-content;
+    justify-content: center;
+    transform: translateY(-40px);
+    align-items: end;
+    gap: 20px;
+}
+
+.user-data{
+    display: flex;
+    gap: 10px;
+}
+
+.posts-wrapper{
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}

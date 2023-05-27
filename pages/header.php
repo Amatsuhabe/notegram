@@ -5,8 +5,12 @@
 
     if (!isset($_SESSION["username"]) && $currentPage != "login.php" && $currentPage != "register.php")
         header("Location: /notegram/pages/login.php");
-
-    // $user = mysqli_fetch_assoc(mysqli_query($connection, "SELECT avatar, username, name, surname FROM users WHERE id = {$_SESSION['id']}"));
+    else if (isset($_SESSION["username"])){
+        if (!isset($connection))
+            require "{$_SERVER["DOCUMENT_ROOT"]}/notegram/php_scripts/connection.php";
+        
+        $sessionUser = mysqli_fetch_assoc(mysqli_query($connection, "SELECT avatar, username, email, name, surname FROM users WHERE id = {$_SESSION['id']}"));
+    }
 ?>
 
 <header class="document-header">
@@ -18,25 +22,23 @@
     <?php
         if (isset($_SESSION["username"])):
     ?>
-        <div class="create-post-wrapper">
+        <a href="/notegram/pages/create_post.php" class="create-post-btn btn">
             <div class="create-post-cross"></div>
-            <a href="/notegram/pages/create_post.php" class="create-post-btn btn">
-                Stwórz nowy post
-            </a>
-        </div>
+            Stwórz nowy post
+        </a>
         <div class="auth-wrapper">
             <div class="user-avatar">
-                <img src="/notegram/avatars/default_male.jfif"></img>
+                <img src="/notegram/avatars/<?php echo $sessionUser["avatar"] ?>"></img>
             </div>
             
             <div class="menu-wrapper hidden">
                 <div class="user-data-wrapper">
                     <div class="user-avatar">
-                        <img src="/notegram/avatars/default_male.jfif"></img>
+                        <img src="/notegram/avatars/<?php echo $sessionUser["avatar"] ?>"></img>
                     </div>
                     <div class="user-data">
                         <div class="username"><?php echo $_SESSION["username"]; ?></div>
-                        <div class="email"><?php echo $_SESSION["email"] ?></div>
+                        <div class="email"><?php echo $sessionUser["email"] ?></div>
                     </div>
                 </div>
                 <div class="menu">
@@ -54,6 +56,7 @@
                 </div>
             </div>
         </div>
+        <script src="/notegram/scripts/header.js"></script>
     <?php else:?>
         <div class="auth-wrapper">
             <a class="login-btn btn" href="/notegram/pages/login.php">
@@ -64,5 +67,5 @@
             </a>
         </div>
     <?php endif;?>
-        <script src="/notegram/scripts/header.js"></script>
+        
 </header>

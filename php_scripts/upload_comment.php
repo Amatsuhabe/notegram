@@ -5,9 +5,12 @@
     $comment = $_POST["comment"];
     $post_id = $_POST["post_id"];
     $user_id = $_SESSION["id"];
-    $date = date("Y-m-d H:i:s");
+    $comment_id = $_POST["comment_id"];
 
-    mysqli_query($connection, "INSERT INTO comments VALUES(null, '$user_id', '$post_id', 0, '$comment', '$date')");
+    $date = date("Y-m-d H:i:s");
+    print_r($_POST);
+
+    mysqli_query($connection, "INSERT INTO comments VALUES(null, '$user_id', '$post_id', $comment_id, '$comment', '$date')");
 
     echo 1;
 ?>

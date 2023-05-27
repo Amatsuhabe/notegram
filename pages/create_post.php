@@ -35,7 +35,7 @@
                     <div class="publication-settings hidden">
                         <div class="cover-wrapper">
                             <input type="file" style="display: none" name="">
-                            <div class="cover is-empty" data-empty="Dodać okładkę">
+                            <div class="cover is-empty" data-empty="Dodać okładkę *">
                                 <img src="" alt="">
                             </div>
                             <div class="clear-btn"></div>
@@ -69,7 +69,7 @@
                                 </div>
                             </div>
                             <div class="key-words input-wrapper">
-                                <label for="key">Słowa kluczowe</label>
+                                <label for="key">Słowa kluczowe <span class="star-require">*</span></label>
                                 <div class="key-input-wrapper">
                                     <input type="text" name="" class="key-input" placeholder="Wpisz od 1 do 10 słów kluczowych, rozdzielając przecinkiem">
                                 </div>

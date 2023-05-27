@@ -40,6 +40,10 @@
     position: relative;
 }
 
+.paragraph, .comment-message{
+    word-break: break-all;
+}
+
 .table{
     word-break: break-all;
     border-collapse: collapse;
@@ -57,7 +61,6 @@
     height: 100%;
     width: 100%;
 }
-
 
 .table-wrapper .settings-wrapper{
     display: flex;
@@ -120,7 +123,6 @@
 .image-container.is-empty{
     border: 1px solid rgba(0,0,0,.1);
     padding: 40px 0;
-    resize: none;
 }
 
 .is-empty img{
@@ -131,7 +133,6 @@
     min-width: 100%;
     max-width: 100%;
     overflow: hidden;
-    resize: horizontal;
 }
 
 .image-container, .image-description{
@@ -195,7 +196,12 @@ li > ul {
     gap: 10px;
     width: 100%;
     padding: 15px 0;
+    
     position: relative;
+}
+
+.comment-field-wrapper:first{
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
 }
 
 .comment-field-container{
@@ -233,7 +239,7 @@ li > ul {
     display: flex;
     flex-direction: column;
     gap: 7px;
-    border-bottom: 1px solid rgba(0,0,0,.2);
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
     padding: 20px 0;
 }
 
@@ -276,6 +282,13 @@ li > ul {
     padding: 0;
 }
 
+.like-btn{
+    display: flex !important;
+    align-items: center;
+    gap: 5px;
+    width: 35px;
+}
+
 .reply-container{
     margin-left: 20px;
     border-top: 1px solid rgba(0,0,0,.2);
@@ -284,8 +297,20 @@ li > ul {
 
 .replies-wrapper{
     display: flex;
+    flex-direction: column;
 }
 
 .expand-item{
+    display: inline-block;
     width: 48px;
+}
+
+.replies-wrapper > .comment-wrapper{
+    border-bottom: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.liked path{
+    fill: red;
 }
