@@ -1,5 +1,3 @@
-<pre>
-123123
 <?php
     require "connection.php";
 
@@ -19,12 +17,16 @@
     $first_paragraph = $_POST["first_paragraph"];
     $date = date("Y-m-d H:i:s");
     $cover = $name;
-    print_r($_POST);
-    mysqli_query($connection, "INSERT INTO posts VALUES('null', '$user_id', '$theme_id', '$header', '$content', '$first_paragraph', '$difficulty', '$cover', '$date')");
     
+    mysqli_query($connection, "INSERT INTO posts VALUES('null', '$user_id', '$theme_id', '$header', '$content', '$first_paragraph', '$difficulty', '$cover', '$date')");
+
     $post_id = mysqli_insert_id($connection);
+
+    echo $post_id;
+    
     foreach($keywords as $keyword){
         mysqli_query($connection, "INSERT INTO keywords VALUES('null', '$post_id', '$keyword')");
     }
+
+
 ?>
-</pre>

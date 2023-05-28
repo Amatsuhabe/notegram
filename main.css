@@ -9,7 +9,7 @@
 .post-wrapper{
     display: flex;
     flex-direction: column;
-    max-width: 728px;
+    width: 728px;
     padding: 20px;
     background-color: white;
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
@@ -58,7 +58,7 @@
     transition: .25s;
 }
 
-.title:hover, .username:hover{
+.post-wrapper .title:hover, .post-wrapper .username:hover{
     color: #75aeca;
 }
 
@@ -132,3 +132,15 @@
     transition: .25s;
 
 } */
+
+@media (width < 768px){
+    .post-wrapper{
+        width: 536px;
+    }
+}
+
+@media (width < 576px){
+    .post-wrapper{
+        width: 420px;
+    }
+}

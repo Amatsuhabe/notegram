@@ -33,7 +33,6 @@
 
             $_SESSION["username"] = $username;
             $_SESSION["id"] = $result['id'];
-            header("Location: /notegram/");
         }
     }
     else{

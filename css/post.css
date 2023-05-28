@@ -135,6 +135,11 @@
     overflow: hidden;
 }
 
+.image-container img{
+    height: auto;
+    width: 100%;
+}
+
 .image-container, .image-description{
     position: relative;
     padding: 20px;

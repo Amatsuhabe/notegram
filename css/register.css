@@ -131,6 +131,7 @@ select:-webkit-autofill {
     opacity: 1;
     animation: rotating .4s infinite;
 }
+
 .input-check-wrapper::after{
     content: attr(data-error);
     position: absolute;

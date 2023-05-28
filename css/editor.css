@@ -168,6 +168,11 @@
     resize: none;
 }
 
+.image-container img{
+    height: auto;
+    width: 100%;
+}
+
 .is-empty img{
     display: none;
 }

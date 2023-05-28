@@ -18,6 +18,7 @@ formField.addEventListener("submit", (event) => {
         })
         .then(response => response.json())
         .then(errors => {
+            console.log(errors)
             errors.forEach(error => {
                 addIncorrect(document.querySelector(`#${error}`))
             })         
@@ -42,6 +43,7 @@ document.querySelectorAll(".input-container:nth-child(1)").forEach(input => {
 passwordField.addEventListener("input", (event) => {
     if (event.target.value.length > 0){
         addCorrect(event.target)
+        addFieldCheck(passwordField, "password")
     }
     else{
         addIncorrect(event.target)
@@ -52,7 +54,6 @@ passwordField.addEventListener("input", (event) => {
     else
         addCorrect(confirmField)
 
-    addFieldCheck(passwordField, "password")
 })
 
 confirmField.addEventListener("input", (event) => {
@@ -65,16 +66,19 @@ confirmField.addEventListener("input", (event) => {
 usernameField.addEventListener("input", (event) => { 
     let value = event.target.value
 
-    let form = new FormData()
-
-    if (value.length < 2 || value.length > 16){
-        addIncorrect(event.target)
-        return 0
-    }
-    else
+    if (value.length >= 2 && value.length <= 20){
         addCorrect(event.target)
+        addFieldCheck(usernameField, "username")
+    }
+    else{
+        addIncorrect(event.target)
+        
+        if (value.length < 2)
+            usernameField.parentElement.dataset.error = "Nazwa użytkownika musi zawierać więcej niż 1 znak"
+        else
+            usernameField.parentElement.dataset.error = "Nazwa użytkownika musi zawierać mniej niż 20 znaków"
+    }
 
-    addFieldCheck(usernameField, "username")
 })
 
 emailField.addEventListener("input", (event) => {
@@ -115,8 +119,8 @@ function addFieldCheck(field, dataName){
         let form = new FormData()
         
         form.append(`${dataName}`, value)
-        
-        passwordTimeout = setTimeout(() => {
+
+        setTimeout(() => {
             fetch(`../php_scripts/check_${dataName}.php`, {
                 method: "POST",
                 body: form
@@ -124,14 +128,14 @@ function addFieldCheck(field, dataName){
             .then(response => response.json())
             .then(data => {
                 console.log(data)
-                
+                addCorrect(field)
                 field.parentElement.dataset.error = data.message
-
+    
                 if (!data.isAvailable)                    
                     addIncorrect(field)
                     
                 field.classList.remove("waiting")
             })
         }, 250)
-    })
+    }, 250)
 }

@@ -57,6 +57,7 @@ function checkRequires(){
                 body: form
             })
             .then(response => response.text())
+            .then(data => window.location.href = `/notegram/pages/post.php?id=${data}`)
         }
 
         publicateBtn.removeAttribute("disabled")
@@ -85,7 +86,6 @@ cover.addEventListener("click", (e) => {
             cover.querySelector(".cover").classList.remove("is-empty")
         }
     }
-
 })
 
 document.addEventListener("mousedown", (e) => {
