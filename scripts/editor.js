@@ -86,7 +86,7 @@ cover.addEventListener("click", (e) => {
             cover.querySelector(".cover").classList.remove("is-empty")
         }
     }
-})
+a})
 
 document.addEventListener("mousedown", (e) => {
     console.log(e.target)
@@ -362,36 +362,41 @@ function createImage(){
             <div class="image-description is-empty" data-empty="Dodać opis" contenteditable="true"></div>
         `
     
-        div.querySelector(".image-container").onclick = () => {
+        div.querySelector(".image-container").onclick = () => { 
             let input = div.querySelector("input") 
             
             input.onchange = (e) => {
+                if (input.files[0] == undefined) return
+
                 let reader = new FileReader()
-                
-                let form = new FormData()
 
                 reader.readAsDataURL(input.files[0])
 
                 reader.onload = (e) => {
-                    console.log(reader, e)
-                }
+                    div.querySelector("img").setAttribute("src", `${reader.result}`)
 
-                form.append("image", input.files[0])
-
-                fetch("../php_scripts/upload_img.php", {
-                    method: "POST",
-                    body: form
-                })
-                .then((response) => response.text())
-                .then((data) => {
-                    div.querySelector("img").setAttribute("src", `/notegram/users_imgs/${data}`)
                     div.classList.remove("is-empty")    
                     div.querySelector(".image-container").classList.remove("is-empty")    
-                    div.querySelector(".image-container").onclick = null
-        
-                    input.onchange = null
+                }
 
-                })
+                // let form = new FormData()
+
+                // form.append("image", input.files[0])
+
+                // fetch("../php_scripts/upload_img.php", {
+                //     method: "POST",
+                //     body: form
+                // })
+                // .then((response) => response.text())
+                // .then((data) => {
+                //     div.querySelector("img").setAttribute("src", `/notegram/users_imgs/${data}`)
+                //     div.classList.remove("is-empty")    
+                //     div.querySelector(".image-container").classList.remove("is-empty")    
+                //     div.querySelector(".image-container").onclick = null
+        
+                //     input.onchange = null
+
+                // })
 
             }
             input.click()
