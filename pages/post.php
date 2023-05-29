@@ -1,6 +1,6 @@
 <?php 
     require "../php_scripts/connection.php";
-        
+                
     $post_id = $_GET['id'];
 
     $query = mysqli_query($connection, "SELECT header, content FROM posts WHERE id = '$post_id'");
@@ -12,9 +12,12 @@
 
     session_start();
     
+    if (!isset($_SESSION['id']))
+        header("Location: /notegram/pages/login.php");
+
     $user = mysqli_fetch_assoc(mysqli_query($connection, "SELECT * FROM users WHERE id={$_SESSION["id"]}"));
     $post = mysqli_fetch_assoc($query);
-
+    
     session_write_close();
 ?>
 

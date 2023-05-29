@@ -1,7 +1,6 @@
 <?php 
     $keywords = mysqli_fetch_all(mysqli_query($connection, "SELECT * FROM keywords WHERE post_id = '{$post["id"]}'"), MYSQLI_ASSOC);
                     
-    $likes = mysqli_query($connection, "SELECT * FROM post_likes WHERE post_id = '{$post["id"]}'");
     $comments = mysqli_query($connection, "SELECT * FROM comments WHERE post_id = '{$post["id"]}'");
     
     $theme = mysqli_fetch_assoc(mysqli_query($connection, "SELECT * FROM themes WHERE id = '{$post["theme_id"]}'"));

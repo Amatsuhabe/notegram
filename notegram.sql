@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Май 27 2023 г., 13:06
+-- Время создания: Май 29 2023 г., 23:17
 -- Версия сервера: 10.4.24-MariaDB
 -- Версия PHP: 8.1.6
 
@@ -58,10 +58,10 @@ INSERT INTO `comments` (`id`, `user_id`, `post_id`, `parent_comment_id`, `conten
 --
 
 CREATE TABLE `comment_likes` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL,
-  `post_id` int(10) UNSIGNED NOT NULL,
-  `comment_id` int(10) UNSIGNED NOT NULL
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `post_id` int(11) UNSIGNED NOT NULL,
+  `comment_id` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -69,8 +69,8 @@ CREATE TABLE `comment_likes` (
 --
 
 INSERT INTO `comment_likes` (`id`, `user_id`, `post_id`, `comment_id`) VALUES
-(5, 2, 69, 107),
 (6, 2, 69, 103),
+(5, 2, 69, 107),
 (7, 9, 69, 103),
 (8, 9, 69, 104),
 (13, 9, 69, 109);
@@ -128,19 +128,6 @@ INSERT INTO `posts` (`id`, `user_id`, `theme_id`, `header`, `content`, `first_pa
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `post_likes`
---
-
-CREATE TABLE `post_likes` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `user_id` int(11) UNSIGNED NOT NULL,
-  `post_id` int(11) UNSIGNED NOT NULL,
-  `create_date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Структура таблицы `themes`
 --
 
@@ -186,7 +173,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `name`, `surname`, `password`, `email`, `gender`, `avatar`) VALUES
 (2, 'ss', 'ss', 'ss', 'ss', 'ss@s.s', 'male', 'default_male.jfif'),
-(9, 'mamba', 'muhmed', 'nabar', 'qwerty', 'muhtar@gmail.com', 'female', 'default_female.jfif');
+(9, 'mamba', 'muhmed', 'nabar', 'qwerty', 'muhtar@gmail.com', 'female', 'default_female.jfif'),
+(10, 'sss', 'www', 'www', 'sss', 'ss@s.ss', 'male', 'default_male.jfif');
 
 --
 -- Индексы сохранённых таблиц
@@ -206,7 +194,10 @@ ALTER TABLE `comments`
 -- Индексы таблицы `comment_likes`
 --
 ALTER TABLE `comment_likes`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`,`post_id`,`comment_id`),
+  ADD KEY `comment_id` (`comment_id`),
+  ADD KEY `post_id` (`post_id`);
 
 --
 -- Индексы таблицы `keywords`
@@ -224,15 +215,6 @@ ALTER TABLE `posts`
   ADD UNIQUE KEY `id` (`id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `theme_id` (`theme_id`);
-
---
--- Индексы таблицы `post_likes`
---
-ALTER TABLE `post_likes`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id` (`id`),
-  ADD KEY `user_id` (`user_id`,`post_id`),
-  ADD KEY `post_id` (`post_id`);
 
 --
 -- Индексы таблицы `themes`
@@ -262,25 +244,19 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT для таблицы `comment_likes`
 --
 ALTER TABLE `comment_likes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT для таблицы `keywords`
 --
 ALTER TABLE `keywords`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT для таблицы `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
-
---
--- AUTO_INCREMENT для таблицы `post_likes`
---
-ALTER TABLE `post_likes`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT для таблицы `themes`
@@ -292,7 +268,7 @@ ALTER TABLE `themes`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -307,6 +283,14 @@ ALTER TABLE `comments`
   ADD CONSTRAINT `comments_ibfk_3` FOREIGN KEY (`parent_comment_id`) REFERENCES `comments` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
+-- Ограничения внешнего ключа таблицы `comment_likes`
+--
+ALTER TABLE `comment_likes`
+  ADD CONSTRAINT `comment_likes_ibfk_1` FOREIGN KEY (`comment_id`) REFERENCES `comments` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `comment_likes_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `comment_likes_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
 -- Ограничения внешнего ключа таблицы `keywords`
 --
 ALTER TABLE `keywords`
@@ -318,13 +302,6 @@ ALTER TABLE `keywords`
 ALTER TABLE `posts`
   ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `posts_ibfk_2` FOREIGN KEY (`theme_id`) REFERENCES `themes` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
-
---
--- Ограничения внешнего ключа таблицы `post_likes`
---
-ALTER TABLE `post_likes`
-  ADD CONSTRAINT `post_likes_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `post_likes_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

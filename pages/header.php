@@ -13,6 +13,7 @@
     }
 ?>
 
+<div class="header-space"></div>
 <header class="document-header">
     <a class="logo-wrapper" href="/notegram">
         <img class="logo-img" src="/notegram/imgs/logo.png"></img>
