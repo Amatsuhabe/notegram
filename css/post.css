@@ -243,7 +243,6 @@ li > ul {
 .comment-wrapper:not(.replies-wrapper > .comment-wrapper){
     display: flex;
     flex-direction: column;
-    gap: 7px;
     border-top: 1px solid rgba(0, 0, 0, .2);
     padding: 20px 0;
 }

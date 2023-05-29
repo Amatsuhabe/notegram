@@ -45,7 +45,7 @@
         <div class="comments-wrapper">
             <div class="comments-container">
                 <?php 
-                    $comments = mysqli_query($connection, "SELECT comments.id as id, avatar, content, username, create_date  FROM comments INNER JOIN users ON comments.user_id = users.id WHERE post_id = '$post_id'");
+                    $comments = mysqli_query($connection, "SELECT comments.id as id, avatar, content, username, create_date  FROM comments INNER JOIN users ON comments.user_id = users.id WHERE post_id = '$post_id' ORDER BY create_date DESC");
                 ?>
                 
                 <div class="comments-header">
@@ -72,8 +72,7 @@
                         else 
                             $query = "parent_comment_id = '$parentID'";
 
-                        $comments = mysqli_fetch_all(mysqli_query($connection, "SELECT comments.id as id, avatar, content, username, create_date FROM comments INNER JOIN users ON comments.user_id = users.id WHERE post_id = '$post_id' and $query"), MYSQLI_ASSOC);
-                        
+                        $comments = mysqli_fetch_all(mysqli_query($connection, "SELECT comments.id as id, avatar, content, username, create_date FROM comments INNER JOIN users ON comments.user_id = users.id WHERE post_id = '$post_id' and $query ORDER BY create_date DESC"), MYSQLI_ASSOC);
                         foreach($comments as $comment){
                             $likes = mysqli_fetch_all(mysqli_query($connection, "SELECT * FROM comment_likes WHERE comment_id = '{$comment["id"]}'"));
 
