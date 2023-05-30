@@ -25,7 +25,7 @@ let listMenu = `
 `
 
 let defaultMenu = `
-    <div class="editor-menu-item" data-create="header">Zagłówek</div>
+    <div class="editor-menu-item" data-create="header">Nagłówek</div>
     <div class="editor-menu-item" data-create="table">Tabela</div>
     <div class="editor-menu-item" data-create="image">Zdjęcie</div>
     <div class="editor-menu-item" data-create="ul">Lista</div>
@@ -41,7 +41,10 @@ function checkRequires(){
         publicateBtn.onclick = () => {
             document.querySelectorAll(".node-remove, .settings-wrapper").forEach(el => el.remove())
             
-            document.querySelectorAll("[contenteditable], [data-empty]").forEach(el => el.removeAttribute("contenteditable"))
+            document.querySelectorAll("[contenteditable], [data-empty]").forEach(el => {
+                el.removeAttribute("contenteditable")
+                el.removeAttribute("data-empty")
+            })
     
             let form = new FormData()
             form.append("content", document.querySelector(".post").innerHTML)
@@ -341,7 +344,7 @@ function createHeader(){
     setTimeout(() => {
         setSelection(div)
         div.className = "content-header is-empty"
-        div.dataset.empty = "Zagłówek"
+        div.dataset.empty = "Nagłówek"
     }, 0)
     
 }

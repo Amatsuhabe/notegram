@@ -16,7 +16,7 @@
     <div class="post-wrapper">
         <div class="editor-container">
             <div class="editor-menu">
-                <div class="editor-menu-item" data-create="header">Zagłówek</div>
+                <div class="editor-menu-item" data-create="header">Nagłówek</div>
                 <div class="editor-menu-item" data-create="table">Tabela</div>
                 <div class="editor-menu-item" data-create="image">Zdjęcie</div>
                 <div class="editor-menu-item" data-create="ul">Lista</div>
@@ -24,7 +24,7 @@
                 <div class="editor-menu-item" data-create="hr">Rozdzielać</div>
             </div>
             <div class="post" contenteditable="true">
-                <div class="post-header is-empty" contenteditable="true" data-empty="Zagłówek"></div>
+                <div class="post-header is-empty" contenteditable="true" data-empty="Nagłówek"></div>
                 
                 <div class="paragraph is-empty" data-empty='Wpisz "/", aby otworzyć menu'></div>
             </div>
