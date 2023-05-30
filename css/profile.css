@@ -34,10 +34,3 @@
     display: flex;
     gap: 10px;
 }
-
-.posts-wrapper{
-    flex-direction: row;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: center;
-}

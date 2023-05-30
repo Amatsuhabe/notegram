@@ -46,11 +46,6 @@
                     <a href="/notegram/pages/profile.php?id=<?php echo $_SESSION["id"];?>" class="menu-item">
                         Profil
                     </a>
-
-                    <div class="menu-item">
-                        Ustawienia
-                    </div>
-
                     <a href="/notegram/php_scripts/logout.php" class="menu-item">
                         Wylogować się
                     </a>
